@@ -49,6 +49,11 @@ def start_run(case_id: int, actor=Depends(operator)):
     return workflow.enqueue(case_id, actor)
 
 
+@router.post('/cases/{case_id}/close')
+def close_case(case_id: int, actor=Depends(operator)):
+    return workflow.close_case(case_id, actor)
+
+
 @router.get('/evidence')
 def list_evidence(_=Depends(current_user)):
     return workflow.recent(evidence)

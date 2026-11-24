@@ -3,7 +3,7 @@ import {state, setSession} from './stores/session.js';
 import {roleLabels} from './constants/workflow.js';
 import {topic} from './constants/project.js';
 import {loginPage} from './pages/login.js';
-import {casesPage} from './pages/cases.js';
+import {bindCases, casesPage} from './pages/cases.js';
 import {bindEditor, editorPage} from './pages/editor.js';
 import {runsPage} from './pages/runs.js';
 import {bindEvidence, evidencePage} from './pages/evidence.js';
@@ -53,6 +53,7 @@ async function refresh() {
     <div class="workspace"><nav aria-label="业务模块">${navigation}</nav><main><div id="message" role="alert"></div>${pages[page](state,id)}</main></div>`;
   document.getElementById('logout').addEventListener('click',()=>{setSession(null); void refresh();});
   if (page==='editor') bindEditor(state, api, fail);
+  if (page==='cases') bindCases(api, refresh, fail);
   if (page==='evidence') bindEvidence(api, refresh, fail);
   if (page==='runs') {
     document.getElementById('refresh').addEventListener('click', refresh);
